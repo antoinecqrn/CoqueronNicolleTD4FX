@@ -36,7 +36,7 @@ public class ListeMemoireClientDAO implements ClientDAO {
 
 
 	@Override
-	public boolean create(ClientPOJO objet) {
+	public Exception create(ClientPOJO objet) {
 
 		objet.setId_client(3);;
 		// Ne fonctionne que si l'objet métier est bien fait...
@@ -44,9 +44,14 @@ public class ListeMemoireClientDAO implements ClientDAO {
 
 			objet.setId_client(objet.getId_client()+ 1);
 		}
+
+		try {
 		boolean ok = this.donnees.add(objet);
-		
-		return ok;
+		}catch(NullPointerException e) {
+			return e;
+		}
+	
+		return null;
 	}
 
 	@Override

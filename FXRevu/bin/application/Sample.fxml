@@ -1,77 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<FlowPane fx:id="flowrida" alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" orientation="VERTICAL" prefHeight="447.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
-   <children>
-      <GridPane fx:id="gridpane" alignment="CENTER" prefHeight="335.0" prefWidth="515.0" style="-fx-border-color: black;">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="173.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="429.0" minWidth="10.0" prefWidth="427.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="76.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="322.0" minHeight="0.0" prefHeight="149.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="331.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="331.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="126.0" minHeight="0.0" prefHeight="49.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label alignment="TOP_LEFT" contentDisplay="TEXT_ONLY" nodeOrientation="RIGHT_TO_LEFT" prefHeight="17.0" prefWidth="140.0" text="Titre :" />
-            <Label alignment="TOP_LEFT" contentDisplay="TEXT_ONLY" nodeOrientation="RIGHT_TO_LEFT" prefHeight="17.0" prefWidth="129.0" text="Description :" GridPane.rowIndex="1" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets top="14.0" />
-               </GridPane.margin>
-            </Label>
-            <Label alignment="TOP_LEFT" contentDisplay="TEXT_ONLY" nodeOrientation="RIGHT_TO_LEFT" prefHeight="17.0" prefWidth="132.0" text="Tarif :" GridPane.rowIndex="2" />
-            <Label alignment="TOP_LEFT" contentDisplay="TEXT_ONLY" nodeOrientation="RIGHT_TO_LEFT" prefHeight="17.0" prefWidth="132.0" text="Périodicité  :" GridPane.rowIndex="3" />
-            <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="17.0" prefWidth="286.0" text="euros au numéro" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="TarifField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="174.0" snapToPixel="false" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin>
-            </TextField>
-            <TextField fx:id="TitreField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="174.0" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin>
-            </TextField>
-            <TextArea fx:id="DescriptionField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="125.0" prefWidth="344.0" style="-fx-background-color: black;" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets bottom="10.0" left="10.0" right="30.0" top="10.0" />
-               </GridPane.margin>
-            </TextArea>
-            <ComboBox fx:id="Periodicites" onAction="#FindPeriod" onHidden="#FindPeriod" onMousePressed="#FindPeriod" prefWidth="150.0" promptText="-" GridPane.columnIndex="1" GridPane.rowIndex="3">
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin>
-            </ComboBox>
-         </children>
-      </GridPane>
-      <Button fx:id="Create" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#TryCreation" text="Créer">
-         <FlowPane.margin>
-            <Insets top="3.0" />
-         </FlowPane.margin></Button>
-      <Label fx:id="Result_lbl" text="appuyer sur créer pour afficher le résultat.">
-         <FlowPane.margin>
-            <Insets top="10.0" />
-         </FlowPane.margin>
-         <font>
-            <Font name="System Bold" size="17.0" />
-         </font>
-      </Label>
-   </children>
-</FlowPane>
+<TabPane fx:id="Tabs" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.SampleController">
+  <tabs>
+    <Tab text="Revues">
+      <content>
+        <AnchorPane fx:id="Grevue" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Button layoutX="245.0" layoutY="170.0" mnemonicParsing="false" onAction="#VueRevue" text="Gérer les Revues" />
+                  <CheckBox layoutX="14.0" layoutY="336.0" mnemonicParsing="false" selected="true" text="MySQL" />
+                  <CheckBox layoutX="487.0" layoutY="336.0" mnemonicParsing="false" text="ListeMemoire" />
+                  <Label layoutX="427.0" layoutY="14.0" text="Persistance actuelle : MySQL" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Périodicites">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="Gperio" layoutX="234.0" layoutY="170.0" mnemonicParsing="false" onAction="#VuePerio" text="Gérer les Périodicites" />
+                  <CheckBox layoutX="14.0" layoutY="335.0" mnemonicParsing="false" selected="true" text="MySQL" />
+                  <CheckBox layoutX="487.0" layoutY="335.0" mnemonicParsing="false" text="ListeMemoire" />
+                  <Label layoutX="427.0" layoutY="14.0" text="Persistance actuelle : MySQL" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab text="Clients">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="Gclients" layoutX="247.0" layoutY="170.0" mnemonicParsing="false" onAction="#VueClients" text="Gérer les Clients" />
+                  <CheckBox fx:id="ClientSQL" layoutX="14.0" layoutY="335.0" mnemonicParsing="false" onAction="#ClickSQL" selected="true" text="MySQL" />
+                  <CheckBox fx:id="ClientListe" layoutX="487.0" layoutY="335.0" mnemonicParsing="false" onAction="#ClickListe" text="ListeMemoire" />
+                  <Label layoutX="427.0" layoutY="14.0" text="Persistance actuelle : MySQL" />
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Abonnements">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <CheckBox layoutX="14.0" layoutY="335.0" mnemonicParsing="false" selected="true" text="MySQL" />
+                  <CheckBox layoutX="487.0" layoutY="335.0" mnemonicParsing="false" text="ListeMemoire" />
+                  <Button fx:id="Gabo" layoutX="227.0" layoutY="170.0" mnemonicParsing="false" onAction="#VueAbonnements" text="Gérer les Abonnements" />
+                  <Label layoutX="427.0" layoutY="14.0" text="Persistance actuelle : MySQL" />
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>

@@ -1,140 +1,131 @@
 package Controllers;
 
+import java.io.IOException;
+import java.net.URL;
+
+import dao.ClientDAO;
+import dao.Connexion;
 import dao.Persistance;
 import factory.DAOFactory;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import metier.PeriodicitePOJO;
-import metier.RevuePOJO;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.AnchorPane;
 
-public class SampleController{
+public class SampleController {
 
     @FXML
-    private FlowPane flowrida;
+    private TabPane Tabs;
+
+    @FXML
+    private AnchorPane Grevue;
+
+    @FXML
+    private Button Gperio;
+
+    @FXML
+    private Button Gclients;
+
+    @FXML
+    private CheckBox ClientSQL;
+
+    @FXML
+    private CheckBox ClientListe;
+
+    @FXML
+    private Button Gabo;
     
-    @FXML
-    private CheckBox periodicites;
-
-    @FXML
-    private GridPane gridpane;
-
-    @FXML
-    private TextField TarifField;
-
-    @FXML
-    private TextField TitreField;
-
-    @FXML
-    private TextArea DescriptionField;
-
-    @FXML
-    private ComboBox<PeriodicitePOJO> Periodicites;
     
-    @FXML
-    private Button Create;
 
     @FXML
-    private Label Result_lbl;
-
-    @FXML
-    void TryCreation(ActionEvent event) {
+    void ClickListe(ActionEvent event) {
     	
-    
+    	System.out.print("happens");
     	
-    	System.out.println("Creation Pressed   ");
-    	FrontRevue();
-    	
+    	ClientSQL.setSelected(false);
+    	ClientListe.setSelected(true);
     }
-    
-    @FXML
-    void DescriptionEntered(ActionEvent event) {
-    	
-    }
-    
-    @FXML
-    void FindPeriod() {
-    		
-    	DAOFactory daos = DAOFactory.getDAOFactory(Persistance.MYSQL);
-    	
-    	Periodicites.setItems(FXCollections.observableArrayList(daos.getPeriodiciteDAO().findAll()));
-    
-    
-    }
-    
-    @FXML
-    void initialize(){
-    	
-    	System.out.print("time");
- 
-    }
-    
 
-	void FrontRevue() {
-		
-		System.out.println(Periodicites.isShowing());
-		
-		DescriptionField.setWrapText(true);// A mettre dans un event description
-		
-		Result_lbl.setTextFill(Color.RED); //Warning par default red
-		
-		if(TitreField.getText().isBlank()){
-			
-			Result_lbl.setText("Veuillez saisir le Titre de la Revue.");
-			
+    @FXML
+    void ClickSQL(ActionEvent event) {
+
+    	ClientListe.setSelected(false);
+    	ClientSQL.setSelected(true);
+    }
+
+    @FXML
+    void VueAbonnements(ActionEvent event) {
+
+    }
+
+    @FXML
+    void VueClients(ActionEvent event) {
+    	try {
+			URL fxmlURL = getClass().getResource("../application/SampleClient.fxml");
+			FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
+			Parent root = fxmlLoader.load();
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.setTitle("Gestion de Clients");
+			stage.setScene(scene);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		else if(TarifField.getText().isBlank()){
-			
-			
-			Result_lbl.setText("Veuillez saisir un prix en valeur numérique. (exemple : 2.4)");
-			
+    }
+
+    @FXML
+    void VuePerio(ActionEvent event) {
+    	try {
+			URL fxmlURL = getClass().getResource("../application/SamplePeriodicite.fxml");
+			FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
+			Parent root = fxmlLoader.load();
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.setTitle("Gestion de Revues");
+			stage.setScene(scene);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		else if(isNumeric(TarifField.getText().trim()) == false){
-			
-			Result_lbl.setText("Veuillez sélectionner un vrai prix. (exemple : 2.4)");
-			
-		}else{
-			
-			
-			BackRevue(TitreField.getText().strip(),TarifField.getText().strip(),Periodicites.getValue());
-		
-			TitreField.clear();
-			TarifField.clear();
+    }
+
+    @FXML
+    void VueRevue(ActionEvent event) {
+    	try {
+			URL fxmlURL = getClass().getResource("../application/SampleRevue.fxml");
+			FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL);
+			Parent root = fxmlLoader.load();
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.setTitle("Gestion de Revues");
+			stage.setScene(scene);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		
-		
-	}
+    }
+    
+    public Persistance getpersistance() {
 
-	private void BackRevue(String strip, String strip2, PeriodicitePOJO periodicitePOJO) {
-		
-
-		Result_lbl.setTextFill(Color.BLACK);
-		Result_lbl.setText(strip+" ("+strip2+" euros)");
-		
-		DAOFactory daos = DAOFactory.getDAOFactory(Persistance.MYSQL);
-		daos.getRevueDAO().create(new RevuePOJO((int) Math.random()*50+1, strip, DescriptionField.toString(),Integer.parseInt(strip2), null, 0));
-		
-	}
-
-	public static boolean isNumeric(String strNum) {
-	    try {
-	        double d = Double.parseDouble(strNum);
-	    } catch (NumberFormatException | NullPointerException nfe) {
-	        return false;
-	    }
-	    return true;
-	}
+    	if(ClientSQL.isSelected() == true){
+    		return Persistance.MYSQL;
+    	}
+    	else {
+    		return Persistance.LISTE_MEMOIRE;
+    	}
+    	
+    	
+    }
 
 }

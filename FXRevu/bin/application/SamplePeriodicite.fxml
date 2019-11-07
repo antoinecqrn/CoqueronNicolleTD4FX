@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<FlowPane fx:id="flowrida" alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" orientation="VERTICAL" prefHeight="757.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.VuePeriodicite">
+   <children>
+      <GridPane fx:id="gridpane" alignment="CENTER" prefHeight="98.0" prefWidth="515.0" style="-fx-border-color: black;">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="148.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="429.0" minWidth="10.0" prefWidth="365.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="96.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="TOP_LEFT" contentDisplay="TEXT_ONLY" nodeOrientation="RIGHT_TO_LEFT" prefHeight="17.0" prefWidth="140.0" text="Libelle  :" />
+            <TextField fx:id="LibelleField" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="341.0" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </TextField>
+         </children>
+         <FlowPane.margin>
+            <Insets top="20.0" />
+         </FlowPane.margin>
+      </GridPane>
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="10.0" prefWidth="225.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="459.0" minWidth="10.0" prefWidth="290.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="Create" disable="true" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#CreatePerio" text="Ajouter">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
+            <Label fx:id="Result_lbl" contentDisplay="RIGHT" prefHeight="22.0" prefWidth="414.0" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Label>
+         </children>
+      </GridPane>
+      <Pane prefHeight="343.0" prefWidth="515.0" style="-fx-border-color: black;">
+         <FlowPane.margin>
+            <Insets top="30.0" />
+         </FlowPane.margin>
+         <children>
+            <TableView fx:id="PerioView" layoutX="14.0" layoutY="14.0" prefHeight="175.0" prefWidth="488.0">
+              <columns>
+                <TableColumn fx:id="TableLibelle" prefWidth="487.0" text="Libelle" />
+              </columns>
+            </TableView>
+            <Button fx:id="Modif" disable="true" layoutX="14.0" layoutY="195.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="238.0" text="Modifier" />
+            <Button fx:id="Supp" disable="true" layoutX="263.0" layoutY="195.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="238.0" text="Supprimer" />
+            <Label layoutX="14.0" layoutY="242.0" text="Recherche :">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="LibelleSearch" layoutX="16.0" layoutY="273.0" prefHeight="29.0" prefWidth="481.0" style="-fx-border-color: black;" />
+            <CheckBox layoutX="419.0" layoutY="243.0" mnemonicParsing="false" text="Combiné" />
+            <Button fx:id="Search" layoutX="14.0" layoutY="309.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="238.0" text="Lancez" />
+            <Button fx:id="Reset" disable="true" layoutX="263.0" layoutY="309.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="238.0" text="Annuler" />
+         </children>
+      </Pane>
+   </children>
+</FlowPane>

@@ -33,7 +33,7 @@ public class ListeMemoirePeriodiciteDAO implements PeriodiciteDAO {
 
 
 	@Override
-	public boolean create(PeriodicitePOJO objet) {
+	public Exception create(PeriodicitePOJO objet) {
 
 		objet.setId_periode(3);
 		// Ne fonctionne que si l'objet métier est bien fait...
@@ -41,9 +41,15 @@ public class ListeMemoirePeriodiciteDAO implements PeriodiciteDAO {
 
 			objet.setId_periode(objet.getId_periode()+ 1);
 		}
-		boolean ok = this.donnees.add(objet);
+
 		
-		return ok;
+		try {
+		boolean ok = this.donnees.add(objet);
+		}catch(NullPointerException e) {
+			return e;
+		}
+	
+		return null;
 	}
 
 	@Override

@@ -21,6 +21,16 @@ public class RevuePOJO {
 		this.id_periode = id_periode;
 	}
 	
+	public RevuePOJO( String title, String description, double tarifnum,  int id_periode) {
+		super();
+		
+		this.title = title;
+		this.description = description;
+		this.tarifnum = tarifnum;
+		this.visuel = null;
+		this.id_periode = id_periode;
+	}
+	
 	public RevuePOJO() {
 		
 	}

@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dao.RevueDAO;
-import metier.PeriodicitePOJO;
 import metier.RevuePOJO;
+
 
 public class SQLRevueDAO  implements RevueDAO {
 	
@@ -26,6 +26,877 @@ public class SQLRevueDAO  implements RevueDAO {
 		
 		return instance;
 	}
+
+
+	public ArrayList<RevuePOJO> findAll() {
+		
+		
+		ArrayList<RevuePOJO> liste = new ArrayList<RevuePOJO>() ;
+		
+		
+		
+		try {
+			
+			Connection laConnexion = Connexion.creeConnexion();
+			
+			PreparedStatement requete = null;
+			ResultSet res;
+			
+			requete = laConnexion.prepareStatement("select * from Revue");			
+			
+			res = requete.executeQuery();
+			
+			
+			
+			
+			while (res.next()) {
+				
+				System.out.println("requête executée");
+				
+
+				int id = (res.getInt(1));
+				String title = (res.getString(2));
+				String des = (res.getString(3));
+				double tarif = (res.getDouble(4));
+				String visu = (res.getString(5));
+				int period = (res.getInt(6));
+				RevuePOJO r = new RevuePOJO(id,title,des,tarif,visu,period);
+				
+				liste.add(r);
+	
+				
+				
+			}
+		
+			
+			if (res != null)
+				res.close();
+			
+			if (requete != null)
+				requete.close();
+			
+			if (laConnexion !=null) 
+				laConnexion.close();
+	
+			
+		}
+		
+		catch (SQLException e )
+		{
+			System.out.println(e);
+		}
+		return liste;
+	
+	}
+	
+public static int NombreAboByRevue(int id1) {
+		
+		
+		int nb = 0 ;
+		
+		
+		
+		try {
+			
+			Connection laConnexion = Connexion.creeConnexion();
+			
+			PreparedStatement requete = null;
+			ResultSet res;
+			
+			requete = laConnexion.prepareStatement("select * from Abonnement where id_revue =? ");			
+			requete.setInt(1, id1);
+			res = requete.executeQuery();
+			
+			
+			
+			
+			while (res.next()) {
+				
+				nb = nb+1;
+			
+				
+			}
+		
+			
+			if (res != null)
+				res.close();
+			
+			if (requete != null)
+				requete.close();
+			
+			if (laConnexion !=null) 
+				laConnexion.close();
+	
+			
+		}
+		
+		catch (SQLException e )
+		{
+			System.out.println(e);
+		}
+		return nb;
+	
+	}
+	
+
+	public static ArrayList<RevuePOJO> getByTitle(String t) {
+		
+		
+		ArrayList<RevuePOJO> liste = new ArrayList<RevuePOJO>() ;
+		
+		
+		
+		try {
+			
+			Connection laConnexion = Connexion.creeConnexion();
+			
+			PreparedStatement requete = null;
+			ResultSet res;
+			
+			requete = laConnexion.prepareStatement("select * from Revue where title=? ");			
+			requete.setString(1, t);
+			res = requete.executeQuery();
+			
+			
+			
+			
+			while (res.next()) {
+				
+				System.out.println("requête executée");
+				
+
+				int id = (res.getInt(1));
+				String title = (res.getString(2));
+				String des = (res.getString(3));
+				double tarif = (res.getDouble(4));
+				String visu = (res.getString(5));
+				int period = (res.getInt(6));
+				RevuePOJO r = new RevuePOJO(id,title,des,tarif,visu,period);
+				
+				liste.add(r);
+	
+				
+				
+			}
+		
+			
+			if (res != null)
+				res.close();
+			
+			if (requete != null)
+				requete.close();
+			
+			if (laConnexion !=null) 
+				laConnexion.close();
+	
+			
+		}
+		
+		catch (SQLException e )
+		{
+			System.out.println(e);
+		}
+		return liste;
+	
+	}
+	
+
+	public static ArrayList<RevuePOJO> getByTitleAndId(String t, int id1) {
+		
+		
+		ArrayList<RevuePOJO> liste = new ArrayList<RevuePOJO>() ;
+		
+		
+		
+		try {
+			
+			Connection laConnexion = Connexion.creeConnexion();
+			
+			PreparedStatement requete = null;
+			ResultSet res;
+			
+			requete = laConnexion.prepareStatement("select * from Revue where title=? and id_revue=? ");			
+			requete.setString(1, t);
+			requete.setInt(2, id1);
+			res = requete.executeQuery();
+			
+			
+			
+			
+			while (res.next()) {
+				
+				System.out.println("requête executée");
+				
+
+				int id = (res.getInt(1));
+				String title = (res.getString(2));
+				String des = (res.getString(3));
+				double tarif = (res.getDouble(4));
+				String visu = (res.getString(5));
+				int period = (res.getInt(6));
+				RevuePOJO r = new RevuePOJO(id,title,des,tarif,visu,period);
+				
+				liste.add(r);
+	
+				
+				
+			}
+		
+			
+			if (res != null)
+				res.close();
+			
+			if (requete != null)
+				requete.close();
+			
+			if (laConnexion !=null) 
+				laConnexion.close();
+	
+			
+		}
+		
+		catch (SQLException e )
+		{
+			System.out.println(e);
+		}
+		return liste;
+	
+	}
+	
+	
+	
+	public static ArrayList<RevuePOJO> getByDescAndId(String t, int id1) {
+		
+		
+		ArrayList<RevuePOJO> liste = new ArrayList<RevuePOJO>() ;
+		
+		
+		
+		try {
+			
+			Connection laConnexion = Connexion.creeConnexion();
+			
+			PreparedStatement requete = null;
+			ResultSet res;
+			
+			requete = laConnexion.prepareStatement("select * from Revue where description=? and id_revue=? ");			
+			requete.setString(1, t);
+			requete.setInt(2, id1);
+			res = requete.executeQuery();
+			
+			
+			
+			
+			while (res.next()) {
+				
+				System.out.println("requête executée");
+				
+
+				int id = (res.getInt(1));
+				String title = (res.getString(2));
+				String des = (res.getString(3));
+				double tarif = (res.getDouble(4));
+				String visu = (res.getString(5));
+				int period = (res.getInt(6));
+				RevuePOJO r = new RevuePOJO(id,title,des,tarif,visu,period);
+				
+				liste.add(r);
+	
+				
+				
+			}
+		
+			
+			if (res != null)
+				res.close();
+			
+			if (requete != null)
+				requete.close();
+			
+			if (laConnexion !=null) 
+				laConnexion.close();
+	
+			
+		}
+		
+		catch (SQLException e )
+		{
+			System.out.println(e);
+		}
+		return liste;
+	
+	}
+	
+	
+	public static ArrayList<RevuePOJO> getByTarifAndId(double t, int id1) {
+		
+		
+		ArrayList<RevuePOJO> liste = new ArrayList<RevuePOJO>() ;
+		
+		
+		
+		try {
+			
+			Connection laConnexion = Connexion.creeConnexion();
+			
+			PreparedStatement requete = null;
+			ResultSet res;
+			
+			requete = laConnexion.prepareStatement("select * from Revue where tarif=? and id_revue=? ");			
+			requete.setDouble(1, t);
+			requete.setInt(2, id1);
+			res = requete.executeQuery();
+			
+			
+			
+			
+			while (res.next()) {
+				
+				System.out.println("requête executée");
+				
+
+				int id = (res.getInt(1));
+				String title = (res.getString(2));
+				String des = (res.getString(3));
+				double tarif = (res.getDouble(4));
+				String visu = (res.getString(5));
+				int period = (res.getInt(6));
+				RevuePOJO r = new RevuePOJO(id,title,des,tarif,visu,period);
+				
+				liste.add(r);
+	
+				
+				
+			}
+		
+			
+			if (res != null)
+				res.close();
+			
+			if (requete != null)
+				requete.close();
+			
+			if (laConnexion !=null) 
+				laConnexion.close();
+	
+			
+		}
+		
+		catch (SQLException e )
+		{
+			System.out.println(e);
+		}
+		return liste;
+	
+	}
+	
+	public static ArrayList<RevuePOJO> getByVisuelAndId(String t, int id1) {
+		
+		
+		ArrayList<RevuePOJO> liste = new ArrayList<RevuePOJO>() ;
+		
+		
+		
+		try {
+			
+			Connection laConnexion = Connexion.creeConnexion();
+			
+			PreparedStatement requete = null;
+			ResultSet res;
+			
+			requete = laConnexion.prepareStatement("select * from Revue where visuel=? and id_revue=? ");			
+			requete.setString(1, t);
+			requete.setInt(2, id1);
+			res = requete.executeQuery();
+			
+			
+			
+			
+			while (res.next()) {
+				
+				System.out.println("requête executée");
+				
+
+				int id = (res.getInt(1));
+				String title = (res.getString(2));
+				String des = (res.getString(3));
+				double tarif = (res.getDouble(4));
+				String visu = (res.getString(5));
+				int period = (res.getInt(6));
+				RevuePOJO r = new RevuePOJO(id,title,des,tarif,visu,period);
+				
+				liste.add(r);
+	
+				
+				
+			}
+		
+			
+			if (res != null)
+				res.close();
+			
+			if (requete != null)
+				requete.close();
+			
+			if (laConnexion !=null) 
+				laConnexion.close();
+	
+			
+		}
+		
+		catch (SQLException e )
+		{
+			System.out.println(e);
+		}
+		return liste;
+	
+	}
+	
+	
+	public static ArrayList<RevuePOJO> getByPeriodAndId(int t, int id1) {
+		
+		
+		ArrayList<RevuePOJO> liste = new ArrayList<RevuePOJO>() ;
+		
+		
+		
+		try {
+			
+			Connection laConnexion = Connexion.creeConnexion();
+			
+			PreparedStatement requete = null;
+			ResultSet res;
+			
+			requete = laConnexion.prepareStatement("select * from Revue where id_periodicite=? and id_revue=? ");			
+			requete.setInt(1, t);
+			requete.setInt(2, id1);
+			res = requete.executeQuery();
+			
+			
+			
+			
+			while (res.next()) {
+				
+				System.out.println("requête executée");
+				
+
+				int id = (res.getInt(1));
+				String title = (res.getString(2));
+				String des = (res.getString(3));
+				double tarif = (res.getDouble(4));
+				String visu = (res.getString(5));
+				int period = (res.getInt(6));
+				RevuePOJO r = new RevuePOJO(id,title,des,tarif,visu,period);
+				
+				liste.add(r);
+	
+				
+				
+			}
+		
+			
+			if (res != null)
+				res.close();
+			
+			if (requete != null)
+				requete.close();
+			
+			if (laConnexion !=null) 
+				laConnexion.close();
+	
+			
+		}
+		
+		catch (SQLException e )
+		{
+			System.out.println(e);
+		}
+		return liste;
+	
+	}
+	
+	
+	
+	
+	
+	
+
+	public static ArrayList<RevuePOJO> getByTitleAndDesc (String t, String d) {
+		
+		
+		ArrayList<RevuePOJO> liste = new ArrayList<RevuePOJO>() ;
+		
+		
+		
+		try {
+			
+			Connection laConnexion = Connexion.creeConnexion();
+			
+			PreparedStatement requete = null;
+			ResultSet res;
+			
+			requete = laConnexion.prepareStatement("select * from Revue where title=? and description=? ");			
+			requete.setString(1, t);
+			requete.setString(2, d);
+			res = requete.executeQuery();
+			
+			
+			
+			
+			while (res.next()) {
+				
+				System.out.println("requête executée");
+				
+
+				int id = (res.getInt(1));
+				String title = (res.getString(2));
+				String des = (res.getString(3));
+				double tarif = (res.getDouble(4));
+				String visu = (res.getString(5));
+				int period = (res.getInt(6));
+				RevuePOJO r = new RevuePOJO(id,title,des,tarif,visu,period);
+				
+				liste.add(r);
+	
+				
+				
+			}
+		
+			
+			if (res != null)
+				res.close();
+			
+			if (requete != null)
+				requete.close();
+			
+			if (laConnexion !=null) 
+				laConnexion.close();
+	
+			
+		}
+		
+		catch (SQLException e )
+		{
+			System.out.println(e);
+		}
+		return liste;
+	
+	}
+	
+
+	public static ArrayList<RevuePOJO> getByDesc(String t) {
+		
+		
+		ArrayList<RevuePOJO> liste = new ArrayList<RevuePOJO>() ;
+		
+		
+		
+		try {
+			
+			Connection laConnexion = Connexion.creeConnexion();
+			
+			PreparedStatement requete = null;
+			ResultSet res;
+			
+			requete = laConnexion.prepareStatement("select * from Revue where description=? ");			
+			requete.setString(1, t);
+			res = requete.executeQuery();
+			
+			
+			
+			
+			while (res.next()) {
+				
+				System.out.println("requête executée");
+				
+
+				int id = (res.getInt(1));
+				String title = (res.getString(2));
+				String des = (res.getString(3));
+				double tarif = (res.getDouble(4));
+				String visu = (res.getString(5));
+				int period = (res.getInt(6));
+				RevuePOJO r = new RevuePOJO(id,title,des,tarif,visu,period);
+				
+				liste.add(r);
+	
+				
+				
+			}
+		
+			
+			if (res != null)
+				res.close();
+			
+			if (requete != null)
+				requete.close();
+			
+			if (laConnexion !=null) 
+				laConnexion.close();
+	
+			
+		}
+		
+		catch (SQLException e )
+		{
+			System.out.println(e);
+		}
+		return liste;
+	
+	}
+	
+	
+public static ArrayList<RevuePOJO> getByVisuel(String t) {
+		
+		
+		ArrayList<RevuePOJO> liste = new ArrayList<RevuePOJO>() ;
+		
+		
+		
+		try {
+			
+			Connection laConnexion = Connexion.creeConnexion();
+			
+			PreparedStatement requete = null;
+			ResultSet res;
+			
+			requete = laConnexion.prepareStatement("select * from Revue where visuel=? ");			
+			requete.setString(1, t);
+			res = requete.executeQuery();
+			
+			
+			
+			
+			while (res.next()) {
+				
+				System.out.println("requête executée");
+				
+
+				int id = (res.getInt(1));
+				String title = (res.getString(2));
+				String des = (res.getString(3));
+				double tarif = (res.getDouble(4));
+				String visu = (res.getString(5));
+				int period = (res.getInt(6));
+				RevuePOJO r = new RevuePOJO(id,title,des,tarif,visu,period);
+				
+				liste.add(r);
+	
+				
+				
+			}
+		
+			
+			if (res != null)
+				res.close();
+			
+			if (requete != null)
+				requete.close();
+			
+			if (laConnexion !=null) 
+				laConnexion.close();
+	
+			
+		}
+		
+		catch (SQLException e )
+		{
+			System.out.println(e);
+		}
+		return liste;
+	
+	}
+
+public static ArrayList<RevuePOJO> getByPeriod(int id1) {
+	
+	
+	ArrayList<RevuePOJO> liste = new ArrayList<RevuePOJO>() ;
+	
+	
+	
+	try {
+		
+		Connection laConnexion = Connexion.creeConnexion();
+		
+		PreparedStatement requete = null;
+		ResultSet res;
+		
+		requete = laConnexion.prepareStatement("select * from Revue where id_periode =?");			
+		requete.setInt(1, id1);
+		
+		res = requete.executeQuery();
+		
+		
+		
+		
+		while (res.next()) {
+			
+			System.out.println("requête executée");
+			
+
+			int id = (res.getInt(1));
+			String title = (res.getString(2));
+			String des = (res.getString(3));
+			double tarif = (res.getDouble(4));
+			String visu = (res.getString(5));
+			int period = (res.getInt(6));
+			RevuePOJO r = new RevuePOJO(id,title,des,tarif,visu,period);
+			
+			liste.add(r);
+
+			
+			
+		}
+	
+		
+		if (res != null)
+			res.close();
+		
+		if (requete != null)
+			requete.close();
+		
+		if (laConnexion !=null) 
+			laConnexion.close();
+
+		
+	}
+	
+	catch (SQLException e )
+	{
+		System.out.println(e);
+	}
+	return liste;
+
+}
+
+
+public static ArrayList<RevuePOJO> getByTarifInf(double id1) {
+	
+	
+	ArrayList<RevuePOJO> liste = new ArrayList<RevuePOJO>() ;
+	
+	
+	
+	try {
+		
+		Connection laConnexion = Connexion.creeConnexion();
+		
+		PreparedStatement requete = null;
+		ResultSet res;
+		
+		requete = laConnexion.prepareStatement("select * from Revue where tarifnum <?");			
+		requete.setDouble(1, id1);
+		
+		res = requete.executeQuery();
+		
+		
+		
+		
+		while (res.next()) {
+			
+			System.out.println("requête executée");
+			
+
+			int id = (res.getInt(1));
+			String title = (res.getString(2));
+			String des = (res.getString(3));
+			double tarif = (res.getDouble(4));
+			String visu = (res.getString(5));
+			int period = (res.getInt(6));
+			RevuePOJO r = new RevuePOJO(id,title,des,tarif,visu,period);
+			
+			liste.add(r);
+
+			
+			
+		}
+	
+		
+		if (res != null)
+			res.close();
+		
+		if (requete != null)
+			requete.close();
+		
+		if (laConnexion !=null) 
+			laConnexion.close();
+
+		
+	}
+	
+	catch (SQLException e )
+	{
+		System.out.println(e);
+	}
+	return liste;
+
+}
+
+
+public static ArrayList<RevuePOJO> getByTarif(double id1) {
+	
+	
+	ArrayList<RevuePOJO> liste = new ArrayList<RevuePOJO>() ;
+	
+	
+	
+	try {
+		
+		Connection laConnexion = Connexion.creeConnexion();
+		
+		PreparedStatement requete = null;
+		ResultSet res;
+		
+		requete = laConnexion.prepareStatement("select * from Revue where tarifnum =?");			
+		requete.setDouble(1, id1);
+		
+		res = requete.executeQuery();
+		
+		
+		
+		
+		while (res.next()) {
+			
+			System.out.println("requête executée");
+			
+
+			int id = (res.getInt(1));
+			String title = (res.getString(2));
+			String des = (res.getString(3));
+			double tarif = (res.getDouble(4));
+			String visu = (res.getString(5));
+			int period = (res.getInt(6));
+			RevuePOJO r = new RevuePOJO(id,title,des,tarif,visu,period);
+			
+			liste.add(r);
+
+			
+			
+		}
+	
+		
+		if (res != null)
+			res.close();
+		
+		if (requete != null)
+			requete.close();
+		
+		if (laConnexion !=null) 
+			laConnexion.close();
+
+		
+	}
+	
+	catch (SQLException e )
+	{
+		System.out.println(e);
+	}
+	return liste;
+
+}
+
+
+
 
 
 	@Override
@@ -90,9 +961,10 @@ public class SQLRevueDAO  implements RevueDAO {
 	}
 
 
+	
 
 	@Override
-	public boolean create(RevuePOJO objet) {
+	public Exception create(RevuePOJO objet) {
 		// TODO Auto-generated method stub
 		
 
@@ -138,11 +1010,11 @@ public class SQLRevueDAO  implements RevueDAO {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			return e;
 			
 		}
 		
-		return false;
+		return null;
 	}
 
 
@@ -244,12 +1116,6 @@ public class SQLRevueDAO  implements RevueDAO {
 	}
 
 
-	@Override
-	public ArrayList<RevuePOJO> findAll() {
-			return null;
-	}
+
+
 }
-
-
-
-

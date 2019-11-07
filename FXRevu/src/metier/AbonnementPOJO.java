@@ -1,21 +1,22 @@
 package metier;
 
-import java.sql.Date;
+
+import java.time.LocalDate;
 
 public class AbonnementPOJO {
 	
 	
 	private int id_client;
 	private int num_abo;
-	private Date datedeb;
-	private Date datefin;
+	private LocalDate datedeb;
+	private LocalDate datefin;
 	
-	public AbonnementPOJO(int id_client, int num_abo, Date date, Date date2) {
+	public AbonnementPOJO(int id_client, int num_abo, LocalDate d1, LocalDate d2) {
 		super();
 		this.id_client = id_client;
 		this.num_abo = num_abo;
-		this.datedeb = date;
-		this.datefin = date2;
+		this.datedeb = d1;
+		this.datefin = d2;
 	}
 	
 	public AbonnementPOJO() {
@@ -38,19 +39,19 @@ public class AbonnementPOJO {
 		this.num_abo = num_abo;
 	}
 
-	public Date getDatedeb() {
+	public LocalDate getDatedeb() {
 		return datedeb;
 	}
 
-	public void setDatedeb(Date datedeb) {
+	public void setDatedeb(LocalDate datedeb) {
 		this.datedeb = datedeb;
 	}
 
-	public Date getDatefin() {
+	public LocalDate getDatefin() {
 		return datefin;
 	}
 
-	public void setDatefin(Date datefin) {
+	public void setDatefin(LocalDate datefin) {
 		this.datefin = datefin;
 	}
 
@@ -95,7 +96,9 @@ public class AbonnementPOJO {
 		if (num_abo != other.num_abo)
 			return false;
 		return true;
-	} 
+	}
+
+	
 
 	
 	

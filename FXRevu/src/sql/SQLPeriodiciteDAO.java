@@ -4,11 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 
 import dao.PeriodiciteDAO;
 import metier.PeriodicitePOJO;
-import metier.RevuePOJO;
+
 
 public class SQLPeriodiciteDAO  implements PeriodiciteDAO {
 	
@@ -26,6 +27,120 @@ public class SQLPeriodiciteDAO  implements PeriodiciteDAO {
 		return instance;
 	}
 
+	
+	public ArrayList<PeriodicitePOJO> findAll() {
+		
+		
+		ArrayList<PeriodicitePOJO> liste = new ArrayList<PeriodicitePOJO>() ;
+		
+		
+		
+		try {
+			
+			Connection laConnexion = Connexion.creeConnexion();
+			
+			PreparedStatement requete = null;
+			ResultSet res;
+			
+			requete = laConnexion.prepareStatement("select * from Periodicite");			
+			
+			res = requete.executeQuery();
+			
+			
+			
+			
+			while (res.next()) {
+				
+				System.out.println("requête executée");
+				
+
+				int id = res.getInt(1);
+				String lib = res.getString(2);
+				PeriodicitePOJO p = new PeriodicitePOJO(id,lib);
+				
+				liste.add(p);
+	
+				
+				
+			}
+		
+			
+			if (res != null)
+				res.close();
+			
+			if (requete != null)
+				requete.close();
+			
+			if (laConnexion !=null) 
+				laConnexion.close();
+	
+			
+		}
+		
+		catch (SQLException e )
+		{
+			System.out.println(e);
+		}
+		return liste;
+	
+	}
+	
+public static ArrayList<PeriodicitePOJO> getByLib(String n) {
+		
+		
+		ArrayList<PeriodicitePOJO> liste = new ArrayList<PeriodicitePOJO>() ;
+		
+		
+		
+		try {
+			
+			Connection laConnexion = Connexion.creeConnexion();
+			
+			PreparedStatement requete = null;
+			ResultSet res;
+			
+			requete = laConnexion.prepareStatement("select * from Periodicite where libelle =? ");			
+			requete.setString(1, n);
+			res = requete.executeQuery();
+			
+			
+			
+			
+			while (res.next()) {
+				
+				System.out.println("requête executée");
+				
+
+				int id = res.getInt(1);
+				String lib = res.getString(2);
+				PeriodicitePOJO p = new PeriodicitePOJO(id,lib);
+				
+				liste.add(p);
+	
+				
+				
+			}
+		
+			
+			if (res != null)
+				res.close();
+			
+			if (requete != null)
+				requete.close();
+			
+			if (laConnexion !=null) 
+				laConnexion.close();
+	
+			
+		}
+		
+		catch (SQLException e )
+		{
+			System.out.println(e);
+		}
+		return liste;
+	
+	}
 
 	@Override
 	public PeriodicitePOJO getById(int id) {
@@ -82,10 +197,68 @@ public class SQLPeriodiciteDAO  implements PeriodiciteDAO {
 		
 	}
 
+	
+public static ArrayList<PeriodicitePOJO> getByIdAndLib(int id1, String n) {
+		
+		
+		ArrayList<PeriodicitePOJO> liste = new ArrayList<PeriodicitePOJO>() ;
+		
+		
+		
+		try {
+			
+			Connection laConnexion = Connexion.creeConnexion();
+			
+			PreparedStatement requete = null;
+			ResultSet res;
+			
+			requete = laConnexion.prepareStatement("select * from Periodicite where id_periodicite=? AND libelle =? ");			
+			requete.setInt(1, id1);
+			requete.setString(2, n);
+			res = requete.executeQuery();
+			
+			
+			
+			
+			while (res.next()) {
+				
+				System.out.println("requête executée");
+				
+
+				int id = res.getInt(1);
+				String lib = res.getString(2);
+				PeriodicitePOJO p = new PeriodicitePOJO(id,lib);
+				
+				liste.add(p);
+	
+				
+				
+			}
+		
+			
+			if (res != null)
+				res.close();
+			
+			if (requete != null)
+				requete.close();
+			
+			if (laConnexion !=null) 
+				laConnexion.close();
+	
+			
+		}
+		
+		catch (SQLException e )
+		{
+			System.out.println(e);
+		}
+		return liste;
+	
+	}
 
 
 	@Override
-	public boolean create(PeriodicitePOJO objet) {
+	public Exception create(PeriodicitePOJO objet) {
 		// TODO Auto-generated method stub
 		
 
@@ -125,11 +298,11 @@ public class SQLPeriodiciteDAO  implements PeriodiciteDAO {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			return e;
 			
 		}
 		
-		return false;
+		return null;
 	}
 
 
@@ -228,51 +401,6 @@ public class SQLPeriodiciteDAO  implements PeriodiciteDAO {
 	}
 
 
-	@Override
-	public ArrayList<PeriodicitePOJO> findAll() {
-		
-		
-		ArrayList<PeriodicitePOJO> result = new ArrayList<PeriodicitePOJO>();
-		
-		// TODO Auto-generated method stub
-				Connection laConnexion = Connexion.creeConnexion();
-				
-				PreparedStatement requete = null;
-				
-		
-
-				try {
 
 
-					requete = laConnexion.prepareStatement("select * from Periodicite");
-					requete.executeQuery();
-						
-				ResultSet res;
-				
-
-					
-					res = requete.executeQuery("select * from Periodicite");
-					
-					while(res.next()) {
-						
-						int i = res.getInt("id_periodicite");
-						String lib = res.getString("libelle");
-						
-						PeriodicitePOJO p = new PeriodicitePOJO(i,lib);
-						result.add(p);
-						
-					}		
-						
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						System.out.println(e);
-					}
-					return result;
-			}
-		
-	}
-
-
-
-
-
+}

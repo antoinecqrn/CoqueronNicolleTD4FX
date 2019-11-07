@@ -26,9 +26,37 @@ public class ClientPOJO {
 		this.country = country;
 	}
 	
+	public ClientPOJO( String nom, String prenom, String num_rue, String rue, String cp, String city,
+			String country) {
+		super();
+		this.id_client = id_client;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.num_rue = num_rue;
+		this.rue = rue;
+		this.cp = cp;
+		this.city = city;
+		this.country = country;
+	}
+	
 	
 	public ClientPOJO() {
 		
+	}
+	
+	public ClientPOJO modify_client(ClientPOJO a) {
+		
+		this.id_client = a.id_client;
+		this.nom = a.nom;
+		this.prenom = a.prenom;
+		this.num_rue = a.num_rue;
+		this.rue = a.rue;
+		this.cp = a.cp;
+		this.city = a.city;
+		this.country = a.country;
+		
+		
+		return a;
 	}
 
 

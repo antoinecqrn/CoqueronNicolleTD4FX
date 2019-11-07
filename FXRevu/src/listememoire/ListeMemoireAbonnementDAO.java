@@ -4,11 +4,11 @@ package listememoire;
 
 
 
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
+
 
 import dao.AbonnementDAO;
 import metier.AbonnementPOJO;
@@ -17,7 +17,7 @@ public class ListeMemoireAbonnementDAO implements AbonnementDAO {
 
 	private static ListeMemoireAbonnementDAO instance;
 
-	private List<AbonnementPOJO> donnees;
+	private ArrayList<AbonnementPOJO> donnees;
 
 
 	public static ListeMemoireAbonnementDAO getInstance() {
@@ -33,51 +33,51 @@ public class ListeMemoireAbonnementDAO implements AbonnementDAO {
 
 		this.donnees = new ArrayList<AbonnementPOJO>();
 		
-		String sDate1="31/12/1998";  
-	    Date date1 = null;
-	    
-		try {
-			date1 = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}  
-	    
-	    String sDate2="31/11/2019";  
-	    Date date2 = null;
-	    
-		try {
-			date2 = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(sDate2);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}  
+
+		String date1 = "08/08/2019" ; 
+		String date2 = "12/10/2019" ;
+		
+	    DateTimeFormatter formatage = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+		LocalDate d1 = LocalDate.parse(date1, formatage);
+		LocalDate d2 = LocalDate.parse(date2, formatage);
 
 
-		this.donnees.add(new AbonnementPOJO(1,1,date1,date2));
+		this.donnees.add(new AbonnementPOJO(0,1,d1,d2));
 	}
 
 
 	@Override
-	public boolean create(AbonnementPOJO objet) {
+	public Exception create(AbonnementPOJO objet) {
 
-		objet.setId_client(3);
 		// Ne fonctionne que si l'objet métier est bien fait...
 		while (this.donnees.contains(objet)) {
 
-			objet.setId_client(objet.getId_client()+ 1);
+			objet.setId_client(objet.getId_client());
+			objet.setNum_abo(objet.getNum_abo());
 		}
 		
+		try {
 		boolean ok = this.donnees.add(objet);
-		
-		return ok;
+		}catch(NullPointerException e) {
+			return e;
+		}
+	
+		return null;
 	}
 
 	@Override
 	public boolean update(AbonnementPOJO objet) {
 		
 		// Ne fonctionne que si l'objet métier est bien fait...
-		int idx = this.donnees.indexOf(objet);
+		
+		
+		AbonnementPOJO abo = this.donnees.get(objet.getNum_abo()-1);
+		
+		int idx = this.donnees.indexOf(abo);
+		
+		
+		//int idx = this.donnees.indexOf(objet);
 		if (idx == -1) {
 			throw new IllegalArgumentException("Tentative de modification d'un objet inexistant");
 		} else {
@@ -91,53 +91,91 @@ public class ListeMemoireAbonnementDAO implements AbonnementDAO {
 	@Override
 	public boolean delete(AbonnementPOJO objet) {
 
-		AbonnementPOJO supprime;
+
+		AbonnementPOJO abo = this.donnees.get(objet.getNum_abo()-1);
+
+		
+		int idx = this.donnees.indexOf(abo);
+		
 		
 		// Ne fonctionne que si l'objet métier est bien fait...
-		int idx = this.donnees.indexOf(objet);
+		// int idx = this.donnees.indexOf(objet);
 		if (idx == -1) {
 			throw new IllegalArgumentException("Tentative de suppression d'un objet inexistant");
 		} else {
-			supprime = this.donnees.remove(idx);
+			abo = this.donnees.remove(idx);
 		}
 		
-		return objet.equals(supprime);
+		return objet.equals(abo);
 	}
 
 	@Override
 	public AbonnementPOJO getById(int id1,int id2) {
 		
-
-		String sDate1="31/12/1998";  
-	    Date date1 = null;
-		try {
-			date1 = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}  
-	    
-	    String sDate2="31/11/2019";  
-	    Date date2 = null;
-		try {
-			date2 = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(sDate2);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}  
-		
-		
-		// Ne fonctionne que si l'objet métier est bien fait...
-		int idx = this.donnees.indexOf(new AbonnementPOJO(id1, id2,date1,date2));
-		if (idx == -1) {
-			throw new IllegalArgumentException("Aucun objet ne possède cet identifiant");
-		} else {
-			return this.donnees.get(idx);
+		for (int i =0; i< this.donnees.size(); i++) {
+			if (this.donnees.get(i).getNum_abo()==id1){
+				return this.donnees.get(i);
+			}
 		}
+		
+		return null;
+		
+
+	
+	}
+	
+public AbonnementPOJO getByNumAbo(int id1) {
+		
+		for (int i =0; i< this.donnees.size(); i++) {
+			if (this.donnees.get(i).getNum_abo()==id1){
+				return this.donnees.get(i);
+			}
+		}
+		
+		return null;
 	}
 
+public AbonnementPOJO getByClient(int id1) {
+	
+	for (int i =0; i< this.donnees.size(); i++) {
+		if (this.donnees.get(i).getId_client()==id1){
+			return this.donnees.get(i);
+		}
+	}
+	
+	return null;
+}
+
+public AbonnementPOJO getByDatedeb(LocalDate d) {
+	
+	for (int i =0; i< this.donnees.size(); i++) {
+		if (this.donnees.get(i).getDatedeb()==d){
+			return this.donnees.get(i);
+		}
+	}
+	
+	return null;
+}
+
+public AbonnementPOJO getByDatefin(LocalDate d) {
+	
+	for (int i =0; i< this.donnees.size(); i++) {
+		if (this.donnees.get(i).getDatefin()==d){
+			return this.donnees.get(i);
+		}
+	}
+	
+	return null;
+}
+
+
+
+
+
+
+
 	public ArrayList<AbonnementPOJO> findAll() {
-		return (ArrayList<AbonnementPOJO>) this.donnees;
+		return this.donnees;
 	}
 
 	@Override

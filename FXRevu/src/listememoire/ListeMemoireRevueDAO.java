@@ -35,7 +35,7 @@ public class ListeMemoireRevueDAO implements RevueDAO {
 
 
 	@Override
-	public boolean create(RevuePOJO objet) {
+	public Exception create(RevuePOJO objet) {
 
 		objet.setId_revue(3);;
 		// Ne fonctionne que si l'objet métier est bien fait...
@@ -43,9 +43,14 @@ public class ListeMemoireRevueDAO implements RevueDAO {
 
 			objet.setId_revue(objet.getId_revue()+ 1);
 		}
-		boolean ok = this.donnees.add(objet);
 		
-		return ok;
+		try {
+		boolean ok = this.donnees.add(objet);
+		}catch(NullPointerException e) {
+			return e;
+		}
+	
+		return null;
 	}
 
 	@Override
